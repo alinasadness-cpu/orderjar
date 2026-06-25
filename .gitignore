@@ -4,12 +4,6 @@
 # Log file
 *.log
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -19,15 +13,10 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
 # Gradle
 .gradle/
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 # IntelliJ IDEA
 .idea/
@@ -36,37 +25,16 @@ build/
 *.ipr
 out/
 
-# Eclipse
-*.pydevproject
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.classpath
-.project
-.settings/
-.loadpath
-.factorypath
-
 # VS Code
 .vscode/
-.code-workspace
 
 # OSX
 .DS_Store
 
-# Gradle wrapper
-!gradle-wrapper.jar
+# Application specific
+artifacts/*.jar
+!artifacts/.gitkeep
 
 # Selenium
-selenium-server-standalone.jar
-chromedriver
-geckodriver
-webdriver/
-
-# Application
-/app-order.jar
+chromedriver.exe
+geckodriver.exe

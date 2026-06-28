@@ -44,7 +44,7 @@ public class OrderTest {
     @Test
     @DisplayName("Should successfully create order with valid data")
     public void shouldCreateOrderWithValidData() {
-        driver.get("http://localhost:8080");
+        driver.get("http://localhost:9999");
         
         WebElement nameInput = wait.until(ExpectedConditions.elementToBeClickable(
             By.cssSelector("[data-test-id='name'] input")));
@@ -75,7 +75,7 @@ public class OrderTest {
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
-        driver.get("http://localhost:8080");
+        driver.get("http://localhost:9999");
         
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
@@ -92,7 +92,7 @@ public class OrderTest {
     @Test
     @DisplayName("Should show validation error for invalid phone")
     public void shouldShowErrorForInvalidPhone() {
-        driver.get("http://localhost:8080");
+        driver.get("http://localhost:9999");
         
         WebElement nameInput = driver.findElement(By.cssSelector("[data-test-id='name'] input"));
         nameInput.sendKeys("Иван Петров");
@@ -112,7 +112,7 @@ public class OrderTest {
     @Test
     @DisplayName("Should show validation error for empty address")
     public void shouldShowErrorForEmptyAddress() {
-        driver.get("http://localhost:8080");
+        driver.get("http://localhost:9999");
         
         WebElement nameInput = wait.until(ExpectedConditions.elementToBeClickable(
             By.cssSelector("[data-test-id='name'] input")));
@@ -141,7 +141,7 @@ public class OrderTest {
     @Test
     @DisplayName("Should show validation error for past date")
     public void shouldShowErrorForPastDate() {
-        driver.get("http://localhost:8080");
+        driver.get("http://localhost:9999");
         
         WebElement nameInput = wait.until(ExpectedConditions.elementToBeClickable(
             By.cssSelector("[data-test-id='name'] input")));

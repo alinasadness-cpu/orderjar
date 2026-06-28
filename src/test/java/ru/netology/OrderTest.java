@@ -42,7 +42,7 @@ public class OrderTest {
     }
     
     @Test
-    "Should successfully create order with valid data"
+    @DisplayName("Should successfully create order with valid data")
     public void shouldCreateOrderWithValidData() {
         driver.get("http://localhost:8080");
         
@@ -73,7 +73,7 @@ public class OrderTest {
     }
     
     @Test
-    "Should show validation error for empty name"
+    @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
         driver.get("http://localhost:8080");
         
@@ -90,7 +90,7 @@ public class OrderTest {
     }
     
     @Test
-    "Should show validation error for invalid phone"
+    @DisplayName("Should show validation error for invalid phone")
     public void shouldShowErrorForInvalidPhone() {
         driver.get("http://localhost:8080");
         
@@ -104,3 +104,69 @@ public class OrderTest {
         continueButton.click();
         
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.cssSelector("[data-test-id='phone'] .input__sub, [data-test-id='phone'] .input_invalid")));
+        
+        assertTrue(errorMessage.isDisplayed());
+    }
+    
+    @Test
+    @DisplayName("Should show validation error for empty address")
+    public void shouldShowErrorForEmptyAddress() {
+        driver.get("http://localhost:8080");
+        
+        WebElement nameInput = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("[data-test-id='name'] input")));
+        nameInput.sendKeys("Иван Петров");
+        
+        WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
+        phoneInput.sendKeys("+79261234567");
+        
+        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        continueButton.click();
+        
+        WebElement dateInput = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("[data-test-id='date'] input")));
+        dateInput.clear();
+        dateInput.sendKeys("25.12.2025");
+        
+        WebElement orderButton = driver.findElement(By.cssSelector("[data-test-id='order']"));
+        orderButton.click();
+        
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.cssSelector("[data-test-id='address'] .input__sub, [data-test-id='address'] .input_invalid")));
+        
+        assertTrue(errorMessage.isDisplayed());
+    }
+    
+    @Test
+    @DisplayName("Should show validation error for past date")
+    public void shouldShowErrorForPastDate() {
+        driver.get("http://localhost:8080");
+        
+        WebElement nameInput = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("[data-test-id='name'] input")));
+        nameInput.sendKeys("Иван Петров");
+        
+        WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
+        phoneInput.sendKeys("+79261234567");
+        
+        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        continueButton.click();
+        
+        WebElement addressInput = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("[data-test-id='address'] input")));
+        addressInput.sendKeys("г. Москва, ул. Тестовая, д. 1");
+        
+        WebElement dateInput = driver.findElement(By.cssSelector("[data-test-id='date'] input"));
+        dateInput.clear();
+        dateInput.sendKeys("01.01.2020");
+        
+        WebElement orderButton = driver.findElement(By.cssSelector("[data-test-id='order']"));
+        orderButton.click();
+        
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.cssSelector("[data-test-id='date'] .input__sub, [data-test-id='date'] .input_invalid")));
+        
+        assertTrue(errorMessage.isDisplayed());
+    }
+}

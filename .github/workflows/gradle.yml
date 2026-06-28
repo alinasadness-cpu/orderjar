@@ -19,6 +19,7 @@ jobs:
         run: |
           java -jar ./artifacts/app-order.jar &
           sleep 15
-          curl -v http://localhost:9999 || echo "SUT не запустился!"
+      - name: Check SUT
+        run: curl -v http://localhost:9999 || echo "SUT не запустился"
       - name: Run tests
         run: ./gradlew test --info

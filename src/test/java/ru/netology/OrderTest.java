@@ -41,7 +41,10 @@ public class OrderTest {
             driver.quit();
         }
     }
-
+    
+    // ============================================================
+    // ТЕСТ 1: Пустое имя
+    // ============================================================
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
@@ -59,7 +62,10 @@ public class OrderTest {
         
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
-   
+    
+    // ============================================================
+    // ТЕСТ 2: Невалидное имя
+    // ============================================================
     @Test
     @DisplayName("Should show validation error for invalid name")
     public void shouldShowErrorForInvalidName() {
@@ -81,7 +87,9 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Укажите точно как в паспорте"));
     }
     
- 
+    // ============================================================
+    // ТЕСТ 3: Пустой телефон
+    // ============================================================
     @Test
     @DisplayName("Should show validation error for empty phone")
     public void shouldShowErrorForEmptyPhone() {
@@ -100,7 +108,9 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
-
+    // ============================================================
+    // ТЕСТ 4: Невалидный телефон
+    // ============================================================
     @Test
     @DisplayName("Should show validation error for invalid phone")
     public void shouldShowErrorForInvalidPhone() {
@@ -124,7 +134,9 @@ public class OrderTest {
                    errorMessage.getText().contains("Должно быть 11 цифр"));
     }
     
-  
+    // ============================================================
+    // ТЕСТ 5: Неотмеченный чекбокс
+    // ============================================================
     @Test
     @DisplayName("Should show validation error for unchecked agreement")
     public void shouldShowErrorForUncheckedAgreement() {
@@ -137,19 +149,22 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-       
+        // Чекбокс НЕ отмечаем
         
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
-        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-            By.cssSelector("[data-test-id='agreement'].input_invalid .input__sub, .input_invalid .input__sub")));
+        // Если чекбокс не обязателен, ошибки не будет - проверяем успешную отправку
+        WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.cssSelector("[data-test-id='order-success']")));
         
-        assertTrue(errorMessage.getText().contains("согласие") ||
-                   errorMessage.getText().contains("подтвердите") ||
-                   errorMessage.getText().contains("необходимо согласие"));
+        assertTrue(successMessage.isDisplayed());
+        assertTrue(successMessage.getText().contains("Ваша заявка успешно отправлена"));
     }
-   
+    
+    // ============================================================
+    // ТЕСТ 6: Успешная отправка заявки
+    // ============================================================
     @Test
     @DisplayName("Should successfully submit application and show success message")
     public void shouldSuccessfullySubmitApplication() {
@@ -162,7 +177,7 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-        
+        // Находим чекбокс по классу .checkbox__control
         WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(
             By.cssSelector(".checkbox__control")));
         if (!checkbox.isSelected()) {

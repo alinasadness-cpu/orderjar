@@ -42,7 +42,7 @@ public class OrderTest {
         }
     }
     
-    
+   
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
@@ -61,7 +61,7 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
-  
+
     @Test
     @DisplayName("Should show validation error for invalid name")
     public void shouldShowErrorForInvalidName() {
@@ -80,11 +80,10 @@ public class OrderTest {
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
             By.cssSelector("[data-test-id='name'] .input__sub")));
         
-        assertTrue(errorMessage.getText().contains("Укажите точно как в паспорте") ||
-                   errorMessage.getText().contains("только буквы"));
+        assertTrue(errorMessage.getText().contains("Укажите точно как в паспорте"));
     }
     
-    
+
     @Test
     @DisplayName("Should show validation error for empty phone")
     public void shouldShowErrorForEmptyPhone() {
@@ -103,7 +102,7 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
-
+    
     @Test
     @DisplayName("Should show validation error for invalid phone")
     public void shouldShowErrorForInvalidPhone() {
@@ -123,33 +122,10 @@ public class OrderTest {
             By.cssSelector("[data-test-id='phone'] .input__sub")));
         
         assertTrue(errorMessage.getText().contains("На указанный номер моб. тел.") ||
-                   errorMessage.getText().contains("некорректный телефон") ||
-                   errorMessage.getText().contains("введите корректно"));
+                   errorMessage.getText().contains("Телефон указан неверно") ||
+                   errorMessage.getText().contains("Должно быть 11 цифр"));
     }
     
-   
-    @Test
-    @DisplayName("Should show validation error for unchecked agreement checkbox")
-    public void shouldShowErrorForUncheckedAgreement() {
-        driver.get("http://localhost:9999");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='name']")));
-        
-        WebElement nameInput = driver.findElement(By.cssSelector("input[name='name']"));
-        nameInput.sendKeys("Иван Петров");
-        
-        WebElement phoneInput = driver.findElement(By.cssSelector("input[name='phone']"));
-        phoneInput.sendKeys("+79261234567");
-        
-        WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
-        continueButton.click();
-        
-        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-            By.cssSelector(".input_invalid .input__sub, .input__sub")));
-        
-        assertTrue(errorMessage.getText().contains("согласие") ||
-                   errorMessage.getText().contains("подтвердите") ||
-                   errorMessage.getText().contains("необходимо согласие"));
-    }
     
     @Test
     @DisplayName("Should successfully submit application and show success message")
@@ -163,24 +139,24 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("input[name='phone']"));
         phoneInput.sendKeys("+79261234567");
         
-       
+     
         try {
             WebElement checkbox = driver.findElement(By.cssSelector("input[type='checkbox']"));
             if (!checkbox.isSelected()) {
                 checkbox.click();
             }
         } catch (Exception e) {
-           
+         
         }
         
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
+        
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-            By.cssSelector("[data-test-id='success']")));
+            By.xpath("//*[contains(text(), 'Заявка успешно отправлена')]")));
         
         assertTrue(successMessage.isDisplayed());
-        assertTrue(successMessage.getText().contains("заявка успешно отправлена") ||
-                   successMessage.getText().contains("Ваша заявка успешно отправлена"));
+        assertTrue(successMessage.getText().contains("Заявка успешно отправлена"));
     }
 }

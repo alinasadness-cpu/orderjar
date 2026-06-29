@@ -42,7 +42,6 @@ public class OrderTest {
         }
     }
     
-   
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
@@ -52,7 +51,7 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -60,7 +59,7 @@ public class OrderTest {
         
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
-  
+    
     @Test
     @DisplayName("Should show validation error for invalid name")
     public void shouldShowErrorForInvalidName() {
@@ -73,7 +72,7 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -82,7 +81,6 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Укажите точно как в паспорте"));
     }
     
-
     @Test
     @DisplayName("Should show validation error for empty phone")
     public void shouldShowErrorForEmptyPhone() {
@@ -92,7 +90,7 @@ public class OrderTest {
         WebElement nameInput = driver.findElement(By.cssSelector("[data-test-id='name'] input"));
         nameInput.sendKeys("Иван Петров");
         
-        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -100,7 +98,7 @@ public class OrderTest {
         
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
-
+    
     @Test
     @DisplayName("Should show validation error for invalid phone")
     public void shouldShowErrorForInvalidPhone() {
@@ -113,7 +111,7 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("123");
         
-        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -124,7 +122,6 @@ public class OrderTest {
                    errorMessage.getText().contains("Должно быть 11 цифр"));
     }
     
-
     @Test
     @DisplayName("Should show validation error for unchecked agreement")
     public void shouldShowErrorForUncheckedAgreement() {
@@ -137,8 +134,7 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-        
-        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
         WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -148,7 +144,6 @@ public class OrderTest {
                    errorMessage.getText().contains("подтвердите") ||
                    errorMessage.getText().contains("необходимо согласие"));
     }
-    
     
     @Test
     @DisplayName("Should successfully submit application and show success message")
@@ -162,14 +157,13 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-      
         WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(
             By.cssSelector("input[name='agreement']")));
         if (!checkbox.isSelected()) {
             checkbox.click();
         }
         
-        WebElement continueButton = driver.findElement(By.cssSelector("[data-test-id='continue']"));
+        WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(

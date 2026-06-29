@@ -42,7 +42,7 @@ public class OrderTest {
         }
     }
     
-   
+
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
@@ -61,7 +61,7 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
-
+    
     @Test
     @DisplayName("Should show validation error for invalid name")
     public void shouldShowErrorForInvalidName() {
@@ -83,7 +83,7 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Укажите точно как в паспорте"));
     }
     
-
+  
     @Test
     @DisplayName("Should show validation error for empty phone")
     public void shouldShowErrorForEmptyPhone() {
@@ -126,7 +126,7 @@ public class OrderTest {
                    errorMessage.getText().contains("Должно быть 11 цифр"));
     }
     
-    
+
     @Test
     @DisplayName("Should successfully submit application and show success message")
     public void shouldSuccessfullySubmitApplication() {
@@ -139,7 +139,7 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("input[name='phone']"));
         phoneInput.sendKeys("+79261234567");
         
-     
+
         try {
             WebElement checkbox = driver.findElement(By.cssSelector("input[type='checkbox']"));
             if (!checkbox.isSelected()) {
@@ -154,9 +154,9 @@ public class OrderTest {
         
         
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-            By.xpath("//*[contains(text(), 'Заявка успешно отправлена')]")));
+            By.cssSelector("[data-test-id='order-success']")));
         
         assertTrue(successMessage.isDisplayed());
-        assertTrue(successMessage.getText().contains("Заявка успешно отправлена"));
+        assertTrue(successMessage.getText().contains("заявка успешно отправлена"));
     }
 }

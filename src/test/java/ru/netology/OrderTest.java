@@ -42,9 +42,6 @@ public class OrderTest {
         }
     }
     
-    // ============================================================
-    // ТЕСТ 1: Пустое имя
-    // ============================================================
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
@@ -63,9 +60,6 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
-    // ============================================================
-    // ТЕСТ 2: Невалидное имя
-    // ============================================================
     @Test
     @DisplayName("Should show validation error for invalid name")
     public void shouldShowErrorForInvalidName() {
@@ -81,7 +75,6 @@ public class OrderTest {
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
-        // Если ошибки нет - проверяем успешную отправку (fallback)
         try {
             WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("[data-test-id='name'].input_invalid .input__sub")));
@@ -94,9 +87,6 @@ public class OrderTest {
         }
     }
     
-    // ============================================================
-    // ТЕСТ 3: Пустой телефон
-    // ============================================================
     @Test
     @DisplayName("Should show validation error for empty phone")
     public void shouldShowErrorForEmptyPhone() {
@@ -115,9 +105,6 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
-    // ============================================================
-    // ТЕСТ 4: Невалидный телефон
-    // ============================================================
     @Test
     @DisplayName("Should show validation error for invalid phone")
     public void shouldShowErrorForInvalidPhone() {
@@ -141,9 +128,6 @@ public class OrderTest {
                    errorMessage.getText().contains("Должно быть 11 цифр"));
     }
     
-    // ============================================================
-    // ТЕСТ 5: Неотмеченный чекбокс
-    // ============================================================
     @Test
     @DisplayName("Should show validation error for unchecked agreement")
     public void shouldShowErrorForUncheckedAgreement() {
@@ -156,18 +140,14 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-        // Чекбокс НЕ отмечаем
-        
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
-        // Если чекбокс не обязателен - проверяем успешную отправку (fallback)
         try {
             WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".input_invalid .input__sub")));
             assertTrue(errorMessage.getText().contains("согласие") ||
-                       errorMessage.getText().contains("подтвердите") ||
-                       errorMessage.getText().contains("необходимо согласие"));
+                       errorMessage.getText().contains("подтвердите"));
         } catch (Exception e) {
             WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("[data-test-id='order-success']")));
@@ -176,9 +156,6 @@ public class OrderTest {
         }
     }
     
-    // ============================================================
-    // ТЕСТ 6: Успешная отправка заявки
-    // ============================================================
     @Test
     @DisplayName("Should successfully submit application and show success message")
     public void shouldSuccessfullySubmitApplication() {
@@ -191,7 +168,6 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-        // Находим чекбокс по полному тексту с твоей страницы
         WebElement checkboxLabel = driver.findElement(By.xpath("//span[contains(text(), 'Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй')]"));
         checkboxLabel.click();
         

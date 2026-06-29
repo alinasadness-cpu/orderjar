@@ -42,6 +42,7 @@ public class OrderTest {
         }
     }
     
+
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
@@ -60,6 +61,7 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
+   
     @Test
     @DisplayName("Should show validation error for invalid name")
     public void shouldShowErrorForInvalidName() {
@@ -75,18 +77,13 @@ public class OrderTest {
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
         
-        try {
-            WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.cssSelector("[data-test-id='name'].input_invalid .input__sub")));
-            assertTrue(errorMessage.getText().contains("Укажите точно как в паспорте"));
-        } catch (Exception e) {
-            WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.cssSelector("[data-test-id='order-success']")));
-            assertTrue(successMessage.isDisplayed());
-            assertTrue(successMessage.getText().contains("Ваша заявка успешно отправлена"));
-        }
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.cssSelector("[data-test-id='name'].input_invalid .input__sub")));
+        
+        assertTrue(errorMessage.getText().contains("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
     
+
     @Test
     @DisplayName("Should show validation error for empty phone")
     public void shouldShowErrorForEmptyPhone() {
@@ -104,6 +101,7 @@ public class OrderTest {
         
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
+    
     
     @Test
     @DisplayName("Should show validation error for invalid phone")
@@ -128,6 +126,7 @@ public class OrderTest {
                    errorMessage.getText().contains("Должно быть 11 цифр"));
     }
     
+    
     @Test
     @DisplayName("Should show validation error for unchecked agreement")
     public void shouldShowErrorForUncheckedAgreement() {
@@ -140,21 +139,16 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
+       
+        
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
-        
-        try {
-            WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.cssSelector(".input_invalid .input__sub")));
-            assertTrue(errorMessage.getText().contains("согласие") ||
-                       errorMessage.getText().contains("подтвердите"));
-        } catch (Exception e) {
-            WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.cssSelector("[data-test-id='order-success']")));
-            assertTrue(successMessage.isDisplayed());
-            assertTrue(successMessage.getText().contains("Ваша заявка успешно отправлена"));
-        }
+     
+        WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.cssSelector("[data-test-id='agreement']")));
+        assertTrue(checkbox.getAttribute("class").contains("input_invalid"));
     }
+    
     
     @Test
     @DisplayName("Should successfully submit application and show success message")
@@ -168,8 +162,12 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("[data-test-id='phone'] input"));
         phoneInput.sendKeys("+79261234567");
         
-        WebElement checkboxLabel = driver.findElement(By.xpath("//span[contains(text(), 'Я соглашаюсь с условиями обработки и использования моих персональных данных и разрешаю сделать запрос в бюро кредитных историй')]"));
-        checkboxLabel.click();
+       
+        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("[data-test-id='agreement'] .checkbox__control")));
+        if (!checkbox.isSelected()) {
+            checkbox.click();
+        }
         
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();

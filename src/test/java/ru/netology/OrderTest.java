@@ -42,7 +42,7 @@ public class OrderTest {
         }
     }
     
-
+   
     @Test
     @DisplayName("Should show validation error for empty name")
     public void shouldShowErrorForEmptyName() {
@@ -60,6 +60,7 @@ public class OrderTest {
         
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
+    
 
     @Test
     @DisplayName("Should show validation error for invalid name")
@@ -82,7 +83,7 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Укажите точно как в паспорте"));
     }
     
-
+    
     @Test
     @DisplayName("Should show validation error for empty phone")
     public void shouldShowErrorForEmptyPhone() {
@@ -101,7 +102,7 @@ public class OrderTest {
         assertTrue(errorMessage.getText().contains("Поле обязательно для заполнения"));
     }
     
-
+   
     @Test
     @DisplayName("Should show validation error for invalid phone")
     public void shouldShowErrorForInvalidPhone() {
@@ -125,7 +126,7 @@ public class OrderTest {
                    errorMessage.getText().contains("Должно быть 11 цифр"));
     }
     
-    
+   
     @Test
     @DisplayName("Should successfully submit application and show success message")
     public void shouldSuccessfullySubmitApplication() {
@@ -138,18 +139,16 @@ public class OrderTest {
         WebElement phoneInput = driver.findElement(By.cssSelector("input[name='phone']"));
         phoneInput.sendKeys("+79261234567");
         
-       
-        try {
-            WebElement checkbox = driver.findElement(By.cssSelector("input[type='checkbox']"));
-            if (!checkbox.isSelected()) {
-                checkbox.click();
-            }
-        } catch (Exception e) {
-           
+      
+        WebElement checkbox = wait.until(ExpectedConditions.elementToBeClickable(
+            By.cssSelector("input[name='agreement']")));
+        if (!checkbox.isSelected()) {
+            checkbox.click();
         }
         
         WebElement continueButton = driver.findElement(By.cssSelector(".button__text"));
         continueButton.click();
+        
         
         WebElement successMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
             By.cssSelector("[data-test-id='order-success']")));
